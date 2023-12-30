@@ -83,7 +83,7 @@ function Router() {
   const [socket, setSocket] = useState(null);
   const messageRef = useRef(null);
   useEffect(() => {
-    setSocket(io("http://localhost:8080"));
+    setSocket(io("https://actagonbackend.onrender.com"));
   }, []);
 
   useEffect(() => {
@@ -110,7 +110,7 @@ function Router() {
     const loggedInUser = JSON.parse(localStorage.getItem("user"));
     const fetchConversations = async () => {
       const res = await fetch(
-        `http://localhost:4000/api/v1/conversation/${loggedInUser?._id}`,
+        `https://actagonbackend.onrender.com/api/v1/conversation/${loggedInUser?._id}`,
         {
           method: "GET",
           headers: {
@@ -126,7 +126,7 @@ function Router() {
 
   useEffect(() => {
     const fetchUsers = async () => {
-      const res = await fetch(`http://localhost:4000/api/users/${user?._id}`, {
+      const res = await fetch(`https://actagonbackend.onrender.com/api/users/${user?._id}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -141,7 +141,7 @@ function Router() {
   const fetchMessages = async (conversationId, receiver, e) => {
     e.preventDefault();
     const res = await fetch(
-      `http://localhost:4000/api/v1/message/${conversationId}?senderId=${user?._id}&&receiverId=${receiver?.receiverId}`,
+      `https://actagonbackend.onrender.com/api/v1/message/${conversationId}?senderId=${user?._id}&&receiverId=${receiver?.receiverId}`,
       {
         method: "GET",
         headers: {
@@ -163,7 +163,7 @@ function Router() {
       message,
       conversationId: messages?.conversationId,
     });
-    const res = await fetch(`http://localhost:4000/api/v1/message`, {
+    const res = await fetch(`https://actagonbackend.onrender.com/api/v1/message`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -180,7 +180,7 @@ function Router() {
   return (
     <>
       <Routes>
-        {token ? (
+        {localStorage.getItem("loginToken") ? (
           <Route
             path="/"
             element={
